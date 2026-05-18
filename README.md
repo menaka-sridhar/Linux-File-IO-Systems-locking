@@ -71,7 +71,9 @@ time.sleep(20)
 fcntl.flock(fp, fcntl.LOCK_UN)
 fp.close()
 ```
+
 ## OUTPUT
 <img width="645" height="345" alt="image" src="https://github.com/user-attachments/assets/13b8c9f2-a0f6-40d1-afc1-3e1bbe9ff7a6" />
+
 # RESULT:
 The programs are executed successfully.
