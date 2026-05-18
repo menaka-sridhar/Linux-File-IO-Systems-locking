@@ -55,8 +55,8 @@ int main(int argc, char *argv[]) {
 ```
 ## OUTPUT
 <img width="681" height="192" alt="Screenshot 2026-05-18 094435" src="https://github.com/user-attachments/assets/71cce172-619f-490e-8ef1-4d6ec2fd4507" />
-## 2.To Write a C program that illustrates files locking
 
+## 2.To Write a C program that illustrates files locking
 ```
 #include <fcntl.h>
 #include <stdio.h>
