@@ -56,20 +56,60 @@ int main(int argc, char *argv[]) {
 ## OUTPUT
 <img width="681" height="192" alt="Screenshot 2026-05-18 094435" src="https://github.com/user-attachments/assets/71cce172-619f-490e-8ef1-4d6ec2fd4507" />
 ## 2.To Write a C program that illustrates files locking
+
 ```
-import fcntl
-import time
-import os
-filename = "filelock.c"
-print(f"Opening {filename}")
-fp = open(filename, "w")
-fcntl.flock(fp, fcntl.LOCK_SH)
-print("Acquired shared lock using flock\n")
-print("Current `lslocks` output:\n")
-os.system("lslocks")
-time.sleep(20)
-fcntl.flock(fp, fcntl.LOCK_UN)
-fp.close()
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/file.h>
+void display_lslocks() {
+    printf("\nCurrent `lslocks` output:\n");
+    fflush(stdout);
+    system("lslocks");
+}
+int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+    char *file = argv[1];
+    int fd;
+    printf("Opening %s\n", file);
+    fd = open(file, O_WRONLY);
+    if (fd == -1) {
+        perror("Error opening file");
+        exit(EXIT_FAILURE);
+    }
+    if (flock(fd, LOCK_SH) == -1) {
+        perror("Error acquiring shared lock");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    printf("Acquired shared lock using flock\n");
+    display_lslocks();
+
+    sleep(1);
+    if (flock(fd, LOCK_EX | LOCK_NB) == -1) {
+        perror("Error upgrading to exclusive lock");
+        flock(fd, LOCK_UN); // Release shared lock if upgrade fails
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    printf("Acquired exclusive lock using flock\n");
+    display_lslocks();
+    sleep(1);
+    if (flock(fd, LOCK_UN) == -1) {
+        perror("Error unlocking");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+    printf("Unlocked\n");
+    display_lslocks();
+
+    close(fd);
+    return 0;
+}
 ```
 
 ## OUTPUT
