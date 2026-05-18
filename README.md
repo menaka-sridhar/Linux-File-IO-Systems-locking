@@ -11,6 +11,7 @@ Write the C Program using Linux IO Systems locking
 Execute the C Program for the desired output. 
 # PROGRAM:
 ## 1.To Write a C program that illustrates files copying 
+```
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -51,9 +52,11 @@ int main(int argc, char *argv[]) {
     close(out);
     return EXIT_SUCCESS;
 }
+```
 ## OUTPUT
 <img width="681" height="192" alt="Screenshot 2026-05-18 094435" src="https://github.com/user-attachments/assets/71cce172-619f-490e-8ef1-4d6ec2fd4507" />
 ## 2.To Write a C program that illustrates files locking
+```
 import fcntl
 import time
 import os
@@ -67,6 +70,7 @@ os.system("lslocks")
 time.sleep(20)
 fcntl.flock(fp, fcntl.LOCK_UN)
 fp.close()
+```
 ## OUTPUT
 <img width="645" height="345" alt="image" src="https://github.com/user-attachments/assets/13b8c9f2-a0f6-40d1-afc1-3e1bbe9ff7a6" />
 # RESULT:
